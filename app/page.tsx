@@ -1,25 +1,27 @@
-import { createSupabaseServerClient } from "@/lib/supabase";
 import BookCard from "@/components/BookCard";
 import type { Book } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  let books: Book[] = [];
-
-  // 환경변수가 없으면 (빌드 타임) DB 조회 건너뜀
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    try {
-      const supabase = await createSupabaseServerClient();
-      const { data } = await supabase
-        .from("books")
-        .select("*")
-        .order("created_at", { ascending: false });
-      books = data ?? [];
-    } catch {
-      // 런타임 에러는 빈 목록으로 처리
-    }
+async function getBooks(): Promise<Book[]> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return [];
+  try {
+    const { createSupabaseServerClient } = await import("@/lib/supabase");
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase
+      .from("books")
+      .select("*")
+      .order("created_at", { ascending: false });
+    return data ?? [];
+  } catch {
+    return [];
   }
+}
+
+export default async function HomePage() {
+  const books = await getBooks();
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-12">
