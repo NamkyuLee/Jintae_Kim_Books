@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase";
 import BookCard from "@/components/BookCard";
 import type { Book } from "@/lib/types";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createSupabaseServerClient();
