@@ -3,6 +3,8 @@ import { createSupabaseServerClient } from "@/lib/supabase";
 import BookContent from "@/components/BookContent";
 import type { Book } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 type Props = { params: Promise<{ id: string }> };
 
 export default async function ReadPage({ params }: Props) {

@@ -4,6 +4,8 @@ import BookCover from "@/components/BookCover";
 import PaymentButton from "@/components/PaymentButton";
 import type { Book } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 type Props = { params: Promise<{ id: string }> };
 
 export default async function BookDetailPage({ params }: Props) {
