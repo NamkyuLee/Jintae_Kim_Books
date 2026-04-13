@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
+import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 import { v4 as uuidv4 } from "uuid";
 import type { Book } from "@/lib/types";
 

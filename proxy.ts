@@ -33,6 +33,9 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    /*
+     * api, _next/static, _next/image, favicon 등 제외한 모든 경로에 적용
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };
