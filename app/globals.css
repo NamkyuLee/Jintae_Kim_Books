@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* prose: 소설 본문 스타일 */
+.novel-content {
+  color: #374151;
+  line-height: 2;
+  font-size: 1.0625rem;
+}
+.novel-content p {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+.novel-content h1,
+.novel-content h2,
+.novel-content h3 {
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: #111827;
+}
+.novel-content h1 { font-size: 1.5rem; }
+.novel-content h2 { font-size: 1.25rem; }
+.novel-content h3 { font-size: 1.125rem; }
+@media (prefers-color-scheme: dark) {
+  .novel-content {
+    color: #d1d5db;
+  }
+  .novel-content h1,
+  .novel-content h2,
+  .novel-content h3 {
+    color: #f9fafb;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
