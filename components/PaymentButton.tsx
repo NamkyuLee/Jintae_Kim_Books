@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
+import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
 import { v4 as uuidv4 } from "uuid";
 import type { Book } from "@/lib/types";
 
@@ -21,12 +21,13 @@ export default function PaymentButton({ book, userId }: PaymentButtonProps) {
       );
 
       const orderId = uuidv4();
-      const widgets = tossPayments.widgets({ customerKey: userId });
 
-      // v2 SDK: amount는 setAmount로 먼저 설정
-      await widgets.setAmount({ currency: "KRW", value: book.price });
+      // API 개별 연동 키 방식: payment() 사용
+      const payment = tossPayments.payment({ customerKey: userId });
 
-      await widgets.requestPayment({
+      await payment.requestPayment({
+        method: "CARD",
+        amount: { currency: "KRW", value: book.price },
         orderId,
         orderName: book.title,
         successUrl: `${window.location.origin}/payment/success?bookId=${book.id}`,
@@ -54,3 +55,4 @@ export default function PaymentButton({ book, userId }: PaymentButtonProps) {
     </button>
   );
 }
+
