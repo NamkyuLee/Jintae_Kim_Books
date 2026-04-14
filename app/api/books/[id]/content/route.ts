@@ -42,10 +42,15 @@ export async function GET(
   }
 
   // 4. Supabase Storage에서 .docx 파일 다운로드 (admin client 사용)
+  // docx_file_path 형식: "{bucket}/{filePath}"
+  const slashIdx = book.docx_file_path.indexOf("/");
+  const bucket = slashIdx !== -1 ? book.docx_file_path.slice(0, slashIdx) : "brave";
+  const filePath = slashIdx !== -1 ? book.docx_file_path.slice(slashIdx + 1) : book.docx_file_path;
+
   const admin = createSupabaseAdminClient();
   const { data: fileData, error: storageError } = await admin.storage
-    .from("books")
-    .download(book.docx_file_path);
+    .from(bucket)
+    .download(filePath);
 
   if (storageError || !fileData) {
     return NextResponse.json({ error: "파일을 읽을 수 없습니다." }, { status: 500 });
