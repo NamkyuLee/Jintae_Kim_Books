@@ -59,7 +59,8 @@ export async function GET(
   // 5. mammoth로 HTML 변환
   try {
     const arrayBuffer = await fileData.arrayBuffer();
-    const result = await mammoth.convertToHtml({ arrayBuffer });
+    const buffer = Buffer.from(arrayBuffer);
+    const result = await mammoth.convertToHtml({ buffer });
     return NextResponse.json({ html: result.value });
   } catch (e) {
     console.error("mammoth 변환 오류:", e);
