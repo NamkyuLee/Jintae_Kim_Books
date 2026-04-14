@@ -44,8 +44,8 @@ export async function GET(
   // 4. Supabase Storage에서 .docx 파일 다운로드 (admin client 사용)
   const admin = createSupabaseAdminClient();
   const { data: fileData, error: storageError } = await admin.storage
-    .from("book-files")
-    .download(book.docx_file_path.replace("book-files/", ""));
+    .from("books")
+    .download(book.docx_file_path);
 
   if (storageError || !fileData) {
     return NextResponse.json({ error: "파일을 읽을 수 없습니다." }, { status: 500 });
